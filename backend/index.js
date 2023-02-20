@@ -1,0 +1,34 @@
+// import express from "express";
+// import mongoose from "mongoose";
+// import dotenv from "dotenv";
+// import { Todo } from "./models/todo";
+
+const cors = require("cors");
+const express = require("express");
+const mongoose = require("mongoose");
+const { Todo } = require("./models");
+const index = require("./routes/index");
+require("dotenv").config();
+
+// dotenv.config();
+console.log(Todo);
+const app = express();
+
+const connection_string = process.env.CONNECTION_STRING;
+const port = process.env.PORT || 5000;
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}.... `);
+});
+
+app.use(cors());
+app.use(express.json());
+app.use("/api/todos", index); //midleware function and with parameter
+
+app.get("/", (req, res) => {
+  res.send("Welcome to the todo app api");
+});
+mongoose
+  .connect(connection_string, {})
+  .then(() => console.log("MongoDB Connection successful!!"))
+  .catch((error) => console.error("Connection failed", error.message));
