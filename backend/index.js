@@ -6,7 +6,7 @@
 const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
-const { Todo } = require("./models");
+const Todo = require("./models/todo.model");
 const index = require("./routes/index");
 require("dotenv").config();
 
@@ -16,6 +16,13 @@ const app = express();
 
 const connection_string = process.env.CONNECTION_STRING;
 const port = process.env.PORT || 5000;
+
+if (!mongoose.connection.readyState >= 1) {
+  mongoose
+    .connect(connection_string, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log("MongoDB Connection successful!!"))
+    .catch((error) => console.error("Connection failed", error.message));
+}
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}.... `);
@@ -28,7 +35,3 @@ app.use("/api/todos", index); //midleware function and with parameter
 app.get("/", (req, res) => {
   res.send("Welcome to the todo app api");
 });
-mongoose
-  .connect(connection_string, {})
-  .then(() => console.log("MongoDB Connection successful!!"))
-  .catch((error) => console.error("Connection failed", error.message));

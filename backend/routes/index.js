@@ -1,11 +1,21 @@
-const { Todo } = require("../models");
+const Todo = require("../models/todo.model");
 const express = require("express");
-const joi = require("joi");
 const Joi = require("joi");
+// const auth = require("../middleware/auth");
 
 const router = express.Router();
 
+//GET
+router.get("/", async (req, res) => {
+  const todos = await Todo.find({ isComplete: true }).sort({ date: -1 }).select({ name: 1 });
+  res.json(todos);
+});
+
+//POST
 router.post("/", async (req, res) => {
+  // transfer schema validation in middleware
+  // joi objects should be in models
+
   const schema = Joi.object({
     //THIS SCHEMA WILL BE USED FOR VALIDATION
     name: Joi.string().min(3).max(30).required(),
@@ -15,7 +25,8 @@ router.post("/", async (req, res) => {
     date: Joi.date(),
   });
 
-  if (error) return res.status(400).send(error.details[0].message);
+  const validate = schema.validate(req.body);
+  if (validate.error) return res.status(400).send(error.details[0].message);
 
   const { value, error } = schema.validate(req.body);
   console.log(value, error);
