@@ -6,9 +6,22 @@ const Joi = require("joi");
 const router = express.Router();
 
 //GET
+//THIS GET IS FILTERING ISCOMPLETE AND DATE IS IN DECENDING ORDER, AND SELECTING ONLY THE NAME
+
+// router.get("/", async (req, res) => {
+//   const todos = await Todo.find({ isComplete: true }).sort({ date: -1 }).select({ name: 1 });
+//   res.json(todos);
+// });
+
+//GET
 router.get("/", async (req, res) => {
-  const todos = await Todo.find({ isComplete: true }).sort({ date: -1 }).select({ name: 1 });
-  res.json(todos);
+  try {
+    const todos = await Todo.find().sort({ date: -1 }); // date will sort by decending
+    res.send(todos);
+  } catch (error) {
+    res.status(500).send(error.message);
+    console.log(error.message);
+  }
 });
 
 //POST
