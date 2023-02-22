@@ -16,8 +16,8 @@ const router = express.Router();
 //GET
 router.get("/", async (req, res) => {
   try {
-    const todos = await Todo.find().sort({ date: -1 }); // date will sort by decending
-    res.send(todos);
+    const todo = await Todo.find().sort({ date: -1 }); // date will sort by decending
+    res.send(todo);
   } catch (error) {
     res.status(500).send(error.message);
     console.log(error.message);
@@ -36,6 +36,11 @@ router.post("/", async (req, res) => {
     uid: Joi.string(),
     isComplete: Joi.boolean(),
     date: Joi.date(),
+  });
+
+  router.delete("/", async (req, res) => {
+    const todo = await Todo.deleteOne({ isComplete: false });
+    res.send(todo);
   });
 
   const validate = schema.validate(req.body);
