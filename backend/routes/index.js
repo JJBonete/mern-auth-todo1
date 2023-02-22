@@ -1,7 +1,6 @@
 const Todo = require("../models/todo.model");
 const express = require("express");
 const Joi = require("joi");
-// const auth = require("../middleware/auth");
 
 const router = express.Router();
 
@@ -38,11 +37,6 @@ router.post("/", async (req, res) => {
     date: Joi.date(),
   });
 
-  router.delete("/", async (req, res) => {
-    const todo = await Todo.deleteOne({ isComplete: false });
-    res.send(todo);
-  });
-
   const validate = schema.validate(req.body);
   if (validate.error) return res.status(400).send(error.details[0].message);
 
@@ -59,24 +53,13 @@ router.post("/", async (req, res) => {
     uid,
   });
 
-  // OPTION 1
   try {
-    todo = await todo.save(); //ASYNC
+    todo = await todo.save();
     res.send(todo);
   } catch (error) {
     res.status(500).send(error.message);
     console.log(error.message);
   }
-
-  // OPTION 2
-  //   todo
-  //     .save()
-  //     .then((todo) => {
-  //       res.send(todo);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error.message);
-  // });
 });
 
 module.exports = router;
