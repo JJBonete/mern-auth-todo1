@@ -44,17 +44,7 @@ router.post("/", async (req, res) => {
     date: Joi.date(),
   });
 
-<<<<<<< Updated upstream
-  router.delete("/", async (req, res) => {
-    const todo = await Todo.deleteOne({ isComplete: false });
-    res.send(todo);
-  });
-
-  const validate = schema.validate(req.body);
-  if (validate.error) return res.status(400).send(error.details[0].message);
-=======
   const { error } = schema.validate(req.body);
->>>>>>> Stashed changes
 
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -72,18 +62,6 @@ router.post("/", async (req, res) => {
     res.status(500).send(error.message);
     console.log(error.message);
   }
-<<<<<<< Updated upstream
-
-  // OPTION 2
-  //   todo
-  //     .save()
-  //     .then((todo) => {
-  //       res.send(todo);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error.message);
-  // });
-=======
 });
 
 // ======================================================
@@ -169,7 +147,6 @@ router.patch("/:id", async (req, res) => {
     res.status(500).send(error.message);
     console.log(error.message);
   }
->>>>>>> Stashed changes
 });
 
 module.exports = router;
