@@ -19,7 +19,10 @@ const port = process.env.PORT || 5000;
 
 if (!mongoose.connection.readyState >= 1) {
   mongoose
-    .connect(connection_string, { useNewUrlParser: true, useUnifiedTopology: true })
+    .connect(connection_string, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
     .then(() => console.log("MongoDB Connection successful!!"))
     .catch((error) => console.error("Connection failed", error.message));
 }
