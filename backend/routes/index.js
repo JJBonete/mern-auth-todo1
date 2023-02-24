@@ -2,7 +2,7 @@ const Todo = require("../models/todo.model");
 const express = require("express");
 const Joi = require("joi");
 const { date } = require("joi");
-// const auth = require("../middleware/auth");
+const auth = require("../middleware/auth");
 
 const router = express.Router();
 
@@ -11,7 +11,7 @@ const router = express.Router();
 // GET
 // THIS GET IS FILTERING ISCOMPLETE AND DATE IS IN DECENDING ORDER, AND SELECTING ONLY THE NAME
 
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
     const todos = await Todo.find({}).sort({ date: -1 });
 

@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const Todo = require("./models/todo.model");
 const signUp = require("./routes/signUp");
 const signIn = require("./routes/signIn");
-
 const index = require("./routes/index");
 require("dotenv").config();
 
