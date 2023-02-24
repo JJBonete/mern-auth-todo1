@@ -33,7 +33,7 @@ app.listen(port, () => {
 
 app.use(cors());
 app.use(express.json());
-app.use("/api/todos", index); //midleware function and with parameter
+app.use("/api/todos", index); //midleware function with parameter
 
 app.get("/", (req, res) => {
   res.send("Welcome to the todo app api");
