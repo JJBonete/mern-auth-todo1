@@ -3,6 +3,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const Todo = require("./models/todo.model");
 const signUp = require("./routes/signUp");
+const signIn = require("./routes/signIn");
+
 const index = require("./routes/index");
 require("dotenv").config();
 
@@ -31,6 +33,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/todos", index); //midleware function with parameter
 app.use("/api/signUp", signUp);
+app.use("/api/signIn", signIn);
 
 app.get("/", (req, res) => {
   res.send("Welcome to the todo app api");

@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const Joi = require("joi");
 const express = require("express");
+const jwt = require("jsonwebtoken");
 const router = express.Router();
 const { User } = require("../models/user");
 
@@ -28,7 +29,10 @@ router.post("/", async (req, res) => {
 
     await user.save();
 
-    res.json({ message: "user created" });
+    const secretKey = process.env.SECRET_KEY;
+    const token = jwt.sign({ _id: user._id, name: user.name, email: user.email }, secretKey);
+
+    res.json(token);
   } catch (error) {
     res.status(500).send(error.message);
     console.log(error.message);
