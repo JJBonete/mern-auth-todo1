@@ -2,7 +2,7 @@ const Todo = require("../models/todo.model");
 const express = require("express");
 const Joi = require("joi");
 const { date } = require("joi");
-// const auth = require("../middleware/auth");
+const auth = require("../middleware/auth");
 
 const router = express.Router();
 
@@ -11,7 +11,7 @@ const router = express.Router();
 // GET
 // THIS GET IS FILTERING ISCOMPLETE AND DATE IS IN DECENDING ORDER, AND SELECTING ONLY THE NAME
 
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
     const todos = await Todo.find({}).sort({ date: -1 });
 
@@ -35,7 +35,7 @@ router.get("/", async (req, res) => {
 
 // ======================================================
 //POST
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const schema = Joi.object({
     name: Joi.string().min(3).max(200).required(),
     author: Joi.string().min(3),
@@ -79,7 +79,7 @@ router.post("/", async (req, res) => {
 // });
 
 //DELETE BY ID
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   try {
     const todo = await Todo.findByIdAndDelete(req.params.id);
 
@@ -95,7 +95,7 @@ router.delete("/:id", async (req, res) => {
 
 // ======================================================
 //PUT
-router.put("/:id", async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   const schema = Joi.object({
     name: Joi.string().min(3).required(),
     author: Joi.string().min(3),
@@ -132,7 +132,7 @@ router.put("/:id", async (req, res) => {
 
 // ======================================================
 //PATCH
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", auth, async (req, res) => {
   try {
     const todo = await Todo.findById(req.params.id);
 
