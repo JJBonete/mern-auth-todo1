@@ -6,7 +6,7 @@ const { User } = require("../models/user");
 
 const router = express.Router();
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const schema = Joi.object({
     email: Joi.string().min(3).max(200).email().required(),
     password: Joi.string().min(6).max(200).required(),
