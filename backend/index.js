@@ -1,13 +1,10 @@
-// import express from "express";
-// import mongoose from "mongoose";
-// import dotenv from "dotenv";
-// import { Todo } from "./models/todo";
-
 const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
 const Todo = require("./models/todo.model");
 const signUp = require("./routes/signUp");
+const signIn = require("./routes/signIn");
+
 const index = require("./routes/index");
 require("dotenv").config();
 
@@ -35,7 +32,8 @@ app.listen(port, () => {
 app.use(cors());
 app.use(express.json());
 app.use("/api/todos", index); //midleware function with parameter
-app.use("api/signUp", signUp);
+app.use("/api/signUp", signUp);
+app.use("/api/signIn", signIn);
 
 app.get("/", (req, res) => {
   res.send("Welcome to the todo app api");
