@@ -23,8 +23,19 @@ const AddTodo = () => {
   return (
     <>
       <form noValidate autoComplete="off" className={classes.formStyle}>
-        <TextField id="enter-todo" variant="outlined" label="Enter Todo" autoFocus fullWidth />
-        <Button className={classes.submitButton} color="primary" variant="contained" type="submit">
+        <TextField
+          id="enter-todo"
+          variant="outlined"
+          label="Enter Todo"
+          autoFocus
+          fullWidth
+        />
+        <Button
+          className={classes.submitButton}
+          color="primary"
+          variant="contained"
+          type="submit"
+        >
           <Send />
         </Button>
       </form>

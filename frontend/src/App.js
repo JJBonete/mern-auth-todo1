@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { Container, makeStyles } from "@material-ui/core";
 
-import Todos from "./components/todos/Todo.jsx";
+import Todos from "./components/todos/Todos";
 import SignIn from "./components/auth/SignIn";
 import SignUp from "./components/auth/SignUp";
 import NavBar from "./components/navBar/NavBar";
