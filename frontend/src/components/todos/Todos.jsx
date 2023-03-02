@@ -1,14 +1,15 @@
-import React from 'react'
+import React from "react";
+import AddTodo from "./AddTodo";
+import ListTodos from "./ListTodos";
 
-const Todos = () =>{
-    return(
-        <>
-        <h2>
-        Todos
-        
-        </h2>
-        </>
-    );
-}
+
+const Todos = () => {
+  return (
+    <>
+    <AddTodo/>  
+    <ListTodos/>
+    </>
+  );
+};
 
 export default Todos;
