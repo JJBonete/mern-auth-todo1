@@ -3,10 +3,11 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const express = require("express");
 const { User } = require("../models/user");
+// const auth = require("../middleware/auth");
 
 const router = express.Router();
 
-router.post("/", auth, async (req, res) => {
+router.post("/", async (req, res) => {
   const schema = Joi.object({
     email: Joi.string().min(3).max(200).email().required(),
     password: Joi.string().min(6).max(200).required(),

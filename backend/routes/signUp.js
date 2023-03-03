@@ -4,8 +4,9 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 const { User } = require("../models/user");
+// const auth = require("../middleware/auth");
 
-router.post("/", auth, async (req, res) => {
+router.post("/", async (req, res) => {
   const schema = Joi.object({
     name: Joi.string().min(3).max(30).required(),
     email: Joi.string().min(3).max(200).email().required(),
