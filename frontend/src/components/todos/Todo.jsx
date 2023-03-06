@@ -6,7 +6,7 @@ import { Create, Delete, CheckCircle } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core";
 import moment from "moment";
 
-import { checkTodo } from "../../store/actions/todoActions";
+import { checkTodo, deleteTodo } from "../../store/actions/todoActions";
 
 const useStyles = makeStyles({
   todoStyle: {
@@ -45,6 +45,10 @@ const Todo = ({ todo, setTodo }) => {
     dispatch(checkTodo(id));
   };
 
+  const handleDelete = (id) => {
+    dispatch(deleteTodo(id));
+  };
+
   return (
     <>
       <div className={classes.todoStyle}>
@@ -76,7 +80,7 @@ const Todo = ({ todo, setTodo }) => {
             <Button onClick={() => handleUpdateClick()}>
               <Create color="primary" />
             </Button>
-            <Button>
+            <Button onClick={() => handleDelete(todo._id)}>
               <Delete color="secondary" />
             </Button>
           </ButtonGroup>

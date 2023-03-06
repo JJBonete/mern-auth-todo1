@@ -14,6 +14,9 @@ export const getTodos = () => {
       })
       .catch((error) => {
         console.log(error.response);
+        toast.error(error.response?.data, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
       });
   };
 };
@@ -64,6 +67,25 @@ export const checkTodo = (id) => {
         dispatch({
           type: "CHECK_TODO",
           todo,
+        });
+      })
+      .catch((error) => {
+        console.log(error.response);
+        toast.error(error.response?.data, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
+      });
+  };
+};
+
+export const deleteTodo = (id) => {
+  return (dispatch) => {
+    axios
+      .delete(`${url}/todos/${id}`)
+      .then(() => {
+        dispatch({
+          type: "DELETE_TODO",
+          id,
         });
       })
       .catch((error) => {
