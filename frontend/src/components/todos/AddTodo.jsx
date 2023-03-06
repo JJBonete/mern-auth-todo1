@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 
 import { Send } from "@material-ui/icons";
 import { TextField, Button, makeStyles } from "@material-ui/core";
 
-import { addTodo } from "../../store/actions/todoActions";
+import { addTodo, updateTodo } from "../../store/actions/todoActions";
 const useStyles = makeStyles({
   formStyle: {
     margin: "0px auto",
@@ -25,8 +25,25 @@ const AddTodo = ({ todo, setTodo }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addTodo(todo));
-    // console.log(todo);
+
+    if (todo._id) {
+      const id = todo._id;
+      const updatedTodo = {
+        name: todo.name,
+        isComplete: todo.isComplete,
+        date: todo.date,
+        author: "Jobert",
+      };
+
+      dispatch(updateTodo(updatedTodo, id));
+    } else {
+      const newTodo = {
+        ...todo,
+        date: new Date(),
+      };
+      dispatch(addTodo(newTodo));
+    }
+
     setTodo({
       name: "",
       isComplete: false,
@@ -43,7 +60,7 @@ const AddTodo = ({ todo, setTodo }) => {
           autoFocus
           fullWidth
           value={todo.name}
-          onChange={(e) => setTodo({ ...todo, name: e.target.value, date: new Date() })}
+          onChange={(e) => setTodo({ ...todo, name: e.target.value })}
         />
         <Button className={classes.submitButton} color="primary" variant="contained" type="submit">
           <Send />

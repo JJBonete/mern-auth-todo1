@@ -17,10 +17,10 @@ export const getTodos = () => {
   };
 };
 
-export const addTodo = (todo) => {
+export const addTodo = (newTodo) => {
   return (dispatch, getState) => {
     axios
-      .post(`${url}/todos`, todo)
+      .post(`${url}/todos`, newTodo)
       .then((todo) => {
         dispatch({
           type: "ADD_TODO",

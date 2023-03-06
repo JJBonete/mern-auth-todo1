@@ -6,9 +6,7 @@ const todoReducer = (state = [], action) => {
       console.log(action);
       return [action.todo.data, ...state];
     case "UPDATE_TODO":
-      return state.map((todo) => {
-        return todo._id === action.todo.data._id ? action.todo.data : todo;
-      });
+      return state.map((todo) => (todo._id === action.todo.data._id ? action.todo.data : todo));
     default:
       return state;
   }
