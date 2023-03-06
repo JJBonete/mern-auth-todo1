@@ -32,3 +32,19 @@ export const addTodo = (todo) => {
       });
   };
 };
+
+export const updateTodo = (updatedTodo, id) => {
+  return (dispatch) => {
+    axios
+      .put(`${url}/todos/${id}`, updatedTodo)
+      .then((todo) => {
+        dispatch({
+          type: "UPDATE_TODO",
+          todo,
+        });
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+  };
+};

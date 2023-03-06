@@ -19,13 +19,9 @@ const useStyles = makeStyles({
   },
 });
 
-const AddTodo = () => {
+const AddTodo = ({ todo, setTodo }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [todo, setTodo] = useState({
-    name: "",
-    isComplete: false,
-  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
