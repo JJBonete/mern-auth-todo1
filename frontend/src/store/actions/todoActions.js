@@ -14,6 +14,9 @@ export const getTodos = () => {
       })
       .catch((error) => {
         console.log(error.response);
+        toast.error(error.response?.data, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
       });
   };
 };
@@ -30,6 +33,9 @@ export const addTodo = (newTodo) => {
       })
       .catch((error) => {
         console.log(error.response);
+        toast.error(error.response?.data, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
       });
   };
 };
@@ -42,6 +48,44 @@ export const updateTodo = (updatedTodo, id) => {
         dispatch({
           type: "UPDATE_TODO",
           todo,
+        });
+      })
+      .catch((error) => {
+        console.log(error.response);
+        toast.error(error.response?.data, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
+      });
+  };
+};
+
+export const checkTodo = (id) => {
+  return (dispatch) => {
+    axios
+      .patch(`${url}/todos/${id}`, {})
+      .then((todo) => {
+        dispatch({
+          type: "CHECK_TODO",
+          todo,
+        });
+      })
+      .catch((error) => {
+        console.log(error.response);
+        toast.error(error.response?.data, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
+      });
+  };
+};
+
+export const deleteTodo = (id) => {
+  return (dispatch) => {
+    axios
+      .delete(`${url}/todos/${id}`)
+      .then(() => {
+        dispatch({
+          type: "DELETE_TODO",
+          id,
         });
       })
       .catch((error) => {

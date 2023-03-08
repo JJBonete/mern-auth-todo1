@@ -20,7 +20,6 @@ const ListTodos = ({ setTodo }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const todos = useSelector((state) => state.todos);
-  console.log(todos);
 
   useEffect(() => {
     dispatch(getTodos());
