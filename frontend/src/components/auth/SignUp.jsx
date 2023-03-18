@@ -1,8 +1,10 @@
-import React, {useState} from "react";
-import {useDispatch, useSelector} from "react-redux"
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Typography, TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { signUp } from "../../store/actions/authActions";
+import { Route, Routes } from "react-router-dom";
+import Todos from "../todos/Todos";
 
 const useStyles = makeStyles({
   formStyle: {
@@ -17,31 +19,38 @@ const useStyles = makeStyles({
 });
 
 const SignUp = () => {
-
   const classes = useStyles();
   const [user, setUser] = useState({
     name: "",
     email: "",
-    password: ""
-  })
-  const dispatch = useDispatch()
-  const state = useSelector(state => state)
-  console.log(state)
+    password: "",
+  });
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
 
   const handleSubmit = (event) => {
-    event.preventDefault()
-    dispatch(signUp(user))
+    event.preventDefault();
+    dispatch(signUp(user));
     setUser({
       name: "",
       email: "",
-      password: ""
-    })
+      password: "",
+    });
+  };
 
-  }
+  if (auth._id) return;
+  <Routes>
+    <Route path="/" element={<Todos />} />
+  </Routes>;
 
   return (
     <>
-      <form noValidate autoComplete="off" className={classes.formStyle} onSubmit= {handleSubmit}>
+      <form
+        noValidate
+        autoComplete="off"
+        className={classes.formStyle}
+        onSubmit={handleSubmit}
+      >
         <Typography variant="h5">SignUp</Typography>
         <TextField
           className={classes.spacing}
@@ -50,7 +59,7 @@ const SignUp = () => {
           variant="outlined"
           fullWidth
           value={user.name}
-          onChange = {(event) => setUser({...user, name: event.target.value})}
+          onChange={(event) => setUser({ ...user, name: event.target.value })}
         />
         <TextField
           className={classes.spacing}
@@ -59,7 +68,7 @@ const SignUp = () => {
           variant="outlined"
           fullWidth
           value={user.email}
-          onChange = {(event) => setUser({...user, email: event.target.value})}
+          onChange={(event) => setUser({ ...user, email: event.target.value })}
         />
         <TextField
           className={classes.spacing}
@@ -69,7 +78,9 @@ const SignUp = () => {
           variant="outlined"
           fullWidth
           value={user.password}
-          onChange = {(event) => setUser({...user, password: event.target.value})}
+          onChange={(event) =>
+            setUser({ ...user, password: event.target.value })
+          }
         />
 
         <Button
