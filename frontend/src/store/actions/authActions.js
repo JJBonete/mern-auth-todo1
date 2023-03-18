@@ -16,11 +16,9 @@ export const signUp = (user) => {
       })
       .catch((error) => {
         console.log(error.response);
-
-        toast.error(error.response?.data),
-          {
-            position: toast.POSITION.BOTTOM_RIGHT,
-          };
+        toast.error(error.response?.data, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
       });
   };
 };
