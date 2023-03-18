@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 export const signUp = (user) => {
   return (dispatch) => {
     axios
-      .post(`${url}/signip`, user)
+      .post(`${url}/signup`, user)
       .then((token) => {
         localStorage.setItem("token", token.data);
 

@@ -3,11 +3,12 @@ import {useDispatch, useSelector} from "react-redux"
 import { Typography, TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { signUp } from "../../store/actions/authActions";
+
 const useStyles = makeStyles({
   formStyle: {
     margin: "0px auto",
     padding: "30px",
-    borderRaius: "9px",
+    borderRadius: "9px",
     boxShadow: "0px 0px 12px -3px #000000",
   },
   spacing: {
@@ -17,16 +18,15 @@ const useStyles = makeStyles({
 
 const SignUp = () => {
 
-
   const classes = useStyles();
-
   const [user, setUser] = useState({
     name: "",
     email: "",
     password: ""
   })
-
   const dispatch = useDispatch()
+  const state = useSelector(state => state)
+  console.log(state)
 
   const handleSubmit = (event) => {
     event.preventDefault()
