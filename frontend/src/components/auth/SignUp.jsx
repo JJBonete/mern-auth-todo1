@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Typography, TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -15,7 +15,15 @@ const useStyles = makeStyles({
 });
 
 const SignUp = () => {
+
+
   const classes = useStyles();
+
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: ""
+  })
 
   return (
     <>
@@ -27,6 +35,8 @@ const SignUp = () => {
           label="Enter Name"
           variant="outlined"
           fullWidth
+          value={user.name}
+          onChange = {(event) => setUser({...user, name: event.target.value})}
         />
         <TextField
           className={classes.spacing}
@@ -34,6 +44,8 @@ const SignUp = () => {
           label="Enter Email"
           variant="outlined"
           fullWidth
+          value={user.email}
+          onChange = {(event) => setUser({...user, email: event.target.value})}
         />
         <TextField
           className={classes.spacing}
@@ -42,6 +54,8 @@ const SignUp = () => {
           label="Enter Password"
           variant="outlined"
           fullWidth
+          value={user.password}
+          onChange = {(event) => setUser({...user, password: event.target.value})}
         />
 
         <Button
