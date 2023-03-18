@@ -1,7 +1,8 @@
 import React, {useState} from "react";
+import {useDispatch, useSelector} from "react-redux"
 import { Typography, TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-
+import { signUp } from "../../store/actions/authActions";
 const useStyles = makeStyles({
   formStyle: {
     margin: "0px auto",
@@ -25,9 +26,22 @@ const SignUp = () => {
     password: ""
   })
 
+  const dispatch = useDispatch()
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    dispatch(signUp(user))
+    setUser({
+      name: "",
+      email: "",
+      password: ""
+    })
+
+  }
+
   return (
     <>
-      <form noValidate autoComplete="off" className={classes.formStyle}>
+      <form noValidate autoComplete="off" className={classes.formStyle} onSubmit= {handleSubmit}>
         <Typography variant="h5">SignUp</Typography>
         <TextField
           className={classes.spacing}
