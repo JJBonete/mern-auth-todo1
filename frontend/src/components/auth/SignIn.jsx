@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Typography, TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { signIn } from "../../store/actions/authActions";
+import { Route, Routes } from "react-router-dom";
+import Todos from "../todos/Todos";
 
 const useStyles = makeStyles({
   formStyle: {
@@ -16,10 +20,37 @@ const useStyles = makeStyles({
 
 const SignIn = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+  const [userData, setuserData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    dispatch(signIn(userData));
+    setuserData({
+      email: "",
+      password: "",
+    });
+  };
+
+  if (auth._id)
+    return (
+      <Routes>
+        <Route path="/" element={<Todos />} />
+      </Routes>
+    );
 
   return (
     <>
-      <form noValidate autoComplete="off" className={classes.formStyle}>
+      <form
+        noValidate
+        autoComplete="off"
+        className={classes.formStyle}
+        onSubmit={handleSubmit}
+      >
         <Typography variant="h5">SignIn</Typography>
         <TextField
           className={classes.spacing}
@@ -27,6 +58,10 @@ const SignIn = () => {
           label="Enter Email"
           variant="outlined"
           fullWidth
+          value={userData.email}
+          onChange={(event) =>
+            setuserData({ ...userData, email: event.target.value })
+          }
         />
         <TextField
           className={classes.spacing}
@@ -35,6 +70,10 @@ const SignIn = () => {
           label="Enter Password"
           variant="outlined"
           fullWidth
+          value={userData.password}
+          onChange={(event) =>
+            setuserData({ ...userData, password: event.target.value })
+          }
         />
 
         <Button

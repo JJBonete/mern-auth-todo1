@@ -17,5 +17,9 @@ ReactDOM.render(
       <App />
     </React.StrictMode>
   </Provider>,
-  document.getElementById("root")
+  document.getElementById("root"),
+  () => {
+    // This function is called when the rendering is complete
+    console.log("Application rendered successfully!");
+  }
 );

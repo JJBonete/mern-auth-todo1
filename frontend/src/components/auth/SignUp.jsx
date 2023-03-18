@@ -38,10 +38,12 @@ const SignUp = () => {
     });
   };
 
-  if (auth._id) return;
-  <Routes>
-    <Route path="/" element={<Todos />} />
-  </Routes>;
+  if (auth._id)
+    return (
+      <Routes>
+        <Route path="/" element={<Todos />} />
+      </Routes>
+    );
 
   return (
     <>

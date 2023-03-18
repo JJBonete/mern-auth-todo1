@@ -33,8 +33,8 @@ function App() {
           <NavBar />
           <Container maxWidth="sm " className={classes.contentStyle}>
             <Routes>
-              <Route path="/signin" element={<SignIn />} />
-              <Route path="/signup" element={<SignUp />} />
+              <Route path="/signin/*" element={<SignIn />} />
+              <Route path="/signup/*" element={<SignUp />} />
               <Route path="/" exact element={<Todos />} />
             </Routes>
           </Container>
