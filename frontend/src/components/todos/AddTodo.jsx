@@ -5,6 +5,7 @@ import { Send } from "@material-ui/icons";
 import { TextField, Button, makeStyles } from "@material-ui/core";
 
 import { addTodo, updateTodo } from "../../store/actions/todoActions";
+
 const useStyles = makeStyles({
   formStyle: {
     margin: "0px auto",
@@ -32,8 +33,7 @@ const AddTodo = ({ todo, setTodo }) => {
         name: todo.name,
         isComplete: todo.isComplete,
         date: todo.date,
-        author: todo.author,
-        uid: todo.uid,
+        author: "Jobert",
       };
 
       dispatch(updateTodo(updatedTodo, id));
