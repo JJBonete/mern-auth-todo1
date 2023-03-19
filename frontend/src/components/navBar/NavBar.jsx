@@ -2,6 +2,8 @@ import React from "react";
 import { AppBar, Typography, Toolbar, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { signOut } from "../../store/actions/authActions";
 
 const useStyles = makeStyles({
   root: {
@@ -16,12 +18,18 @@ const useStyles = makeStyles({
 });
 
 const NavBar = () => {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const navigate = useNavigate();
+  const state = useSelector((state) => state);
+  const auth = useSelector((state) => state.auth);
+  console.log(state);
 
   const handleSignOut = () => {
     //signOut the user
-    navigate("/signin");
+    dispatch(signOut());
+
+    navigate("/signIn");
   };
   return (
     <>
@@ -32,23 +40,30 @@ const NavBar = () => {
               Todo List App
             </Link>
           </Typography>
-          <Typography variant="subtitle2" className={classes.root}>
-            Logged in as Jobert
-          </Typography>
+          {auth._id ? (
+            <>
+              <Typography variant="subtitle2" className={classes.root}>
+                Logged in as {auth.name}
+              </Typography>
 
-          <Button color="inherit" onClick={() => handleSignOut()}>
-            SignOut
-          </Button>
-          <Button color="inherit">
-            <Link className={classes.linkStyle} to="/signin">
-              SignIn
-            </Link>
-          </Button>
-          <Button color="inherit">
-            <Link className={classes.linkStyle} to="/signup">
-              SignUp
-            </Link>
-          </Button>
+              <Button color="inherit" onClick={() => handleSignOut()}>
+                SignOut
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button color="inherit">
+                <Link className={classes.linkStyle} to="/signIn">
+                  SignIn
+                </Link>
+              </Button>
+              <Button color="inherit">
+                <Link className={classes.linkStyle} to="/signUp">
+                  SignUp
+                </Link>
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </>

@@ -8,7 +8,7 @@ const index = require("./routes/index");
 require("dotenv").config();
 
 // dotenv.config();
-console.log(Todo);
+// console.log(Todo);
 const app = express();
 
 const connection_string = process.env.CONNECTION_STRING;

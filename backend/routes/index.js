@@ -2,7 +2,7 @@ const Todo = require("../models/todo.model");
 const express = require("express");
 const Joi = require("joi");
 const { date } = require("joi");
-// const auth = require("../middleware/auth");
+const auth = require("../middleware/auth");
 
 const router = express.Router();
 
@@ -10,13 +10,14 @@ const router = express.Router();
 
 // GET
 // THIS GET IS FILTERING ISCOMPLETE AND DATE IS IN DECENDING ORDER, AND SELECTING ONLY THE NAME
-// NOTE TO SELF: AFTER FINISHING REDUX, ADD auth, before async func in all endpoints
+// NOTE TO SELF: AFTER FINISHING REDUX, ADD auth, before auth, async func in all endpoints
 
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
     const todos = await Todo.find({}).sort({ date: -1 });
+    const filteredTodos = todos.filter((todo) => todo.uid === req.user._id);
 
-    res.json(todos);
+    res.send(filteredTodos);
   } catch (error) {
     res.status(500).send(error.message);
     console.log(error.message);
@@ -24,7 +25,7 @@ router.get("/", async (req, res) => {
 });
 
 //GET
-// router.get("/", async (req, res) => {
+// router.get("/", auth, async (req, res) => {
 //   try {
 //     const todo = await Todo.find().sort({ date: -1 }); // date will sort by decending
 //     res.send(todo);
@@ -36,7 +37,7 @@ router.get("/", async (req, res) => {
 
 // ======================================================
 //POST
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const schema = Joi.object({
     name: Joi.string().min(3).max(200).required(),
     author: Joi.string().min(3),
@@ -68,26 +69,30 @@ router.post("/", async (req, res) => {
 // ======================================================
 
 //DELETEONE
-// router.delete("/", async (req, res) => {
+// router.delete("/", auth, async (req, res) => {
 //   const todo = await Todo.deleteOne({ isComplete: false });
 //   res.send(todo);
 // });
 
 //DELETEMANY
-// router.delete("/", async (req, res) => {
+// router.delete("/", auth, async (req, res) => {
 //   const todo = await Todo.deleteMany({ isComplete: false });
 //   res.send(todo);
 // });
 
 //DELETE BY ID
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   try {
     const todo = await Todo.findByIdAndDelete(req.params.id);
 
     if (!todo) return res.status(404).send("Todo not found...");
+
+    if (todo.uid !== req.user._id)
+      return res.status(401).send("Todo deletion failed. Not authorized...");
+
     const deletedTodo = await Todo.findByIdAndDelete(req.params.id);
 
-    res.send(todo);
+    res.send(deletedTodo);
   } catch (error) {
     res.send(500).send(error.message);
     console.log(error.message);
@@ -96,7 +101,7 @@ router.delete("/:id", async (req, res) => {
 
 // ======================================================
 //PUT
-router.put("/:id", async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   const schema = Joi.object({
     name: Joi.string().min(3).required(),
     author: Joi.string().min(3),
@@ -112,6 +117,9 @@ router.put("/:id", async (req, res) => {
     const todo = await Todo.findById(req.params.id);
     if (!todo) return res.status(404).send("Todo not found...");
 
+    if (todo.uid !== req.user._id)
+      return res.status(401).send("Todo update failed. Not authorized...");
+
     const { name, author, isComplete, date } = req.body;
     const updatedTodo = await Todo.findByIdAndUpdate(
       req.params.id,
@@ -120,6 +128,7 @@ router.put("/:id", async (req, res) => {
         author,
         isComplete,
         date,
+        uid,
       },
       { new: true }
     );
@@ -133,11 +142,16 @@ router.put("/:id", async (req, res) => {
 
 // ======================================================
 //PATCH
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", auth, async (req, res) => {
   try {
     const todo = await Todo.findById(req.params.id);
 
     if (!todo) return res.status(404).send("Todo not found...");
+
+    if (todo.uid !== req.user._id)
+      return res
+        .status(401)
+        .send("Todo check/uncheck failed. Not authorized...");
 
     const updatedTodo = await Todo.findByIdAndUpdate(
       req.params.id,

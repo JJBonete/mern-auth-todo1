@@ -61,14 +61,14 @@ const Todo = ({ todo, setTodo }) => {
             <Typography variant="subtitle1">{todo.name}</Typography>
           )}
           <Typography className={classes.grayStyle} variant="body2">
-            Author: Jobert
+            Author: {todo.author}
           </Typography>
           <Typography className={classes.grayStyle} variant="body2">
             Added: {moment(todo.date).fromNow()}
           </Typography>
         </div>
         <div>
-          <ButtonGroup size="small" aria-aria-label="outline primary button group">
+          <ButtonGroup size="small" aria-label="outline primary button group">
             <Button onClick={() => handleCheck(todo._id)}>
               {todo.isComplete ? (
                 <CheckCircle color="action" className={classes.isComplete} />

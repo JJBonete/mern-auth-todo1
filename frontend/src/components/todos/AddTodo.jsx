@@ -5,6 +5,7 @@ import { Send } from "@material-ui/icons";
 import { TextField, Button, makeStyles } from "@material-ui/core";
 
 import { addTodo, updateTodo } from "../../store/actions/todoActions";
+
 const useStyles = makeStyles({
   formStyle: {
     margin: "0px auto",
@@ -32,7 +33,8 @@ const AddTodo = ({ todo, setTodo }) => {
         name: todo.name,
         isComplete: todo.isComplete,
         date: todo.date,
-        author: "Jobert",
+        author: todo.author,
+        uid: todo.uid,
       };
 
       dispatch(updateTodo(updatedTodo, id));
@@ -52,7 +54,12 @@ const AddTodo = ({ todo, setTodo }) => {
 
   return (
     <>
-      <form noValidate autoComplete="off" className={classes.formStyle} onSubmit={handleSubmit}>
+      <form
+        noValidate
+        autoComplete="off"
+        className={classes.formStyle}
+        onSubmit={handleSubmit}
+      >
         <TextField
           id="enter-todo"
           variant="outlined"
@@ -62,7 +69,12 @@ const AddTodo = ({ todo, setTodo }) => {
           value={todo.name}
           onChange={(e) => setTodo({ ...todo, name: e.target.value })}
         />
-        <Button className={classes.submitButton} color="primary" variant="contained" type="submit">
+        <Button
+          className={classes.submitButton}
+          color="primary"
+          variant="contained"
+          type="submit"
+        >
           <Send />
         </Button>
       </form>
