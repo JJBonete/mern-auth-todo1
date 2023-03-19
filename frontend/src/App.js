@@ -31,7 +31,7 @@ function App() {
         <ToastContainer />
         <Container maxWidth="md">
           <NavBar />
-          <Container maxWidth="sm " className={classes.contentStyle}>
+          <Container maxWidth="sm" className={classes.contentStyle}>
             <Routes>
               <Route path="/signin/*" element={<SignIn />} />
               <Route path="/signup/*" element={<SignUp />} />
