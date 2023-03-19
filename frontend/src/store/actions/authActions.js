@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 export const signUp = (user) => {
   return (dispatch) => {
     axios
-      .post(`${url}/signup`, user)
+      .post(`${url}/signUp`, user)
       .then((token) => {
         localStorage.setItem("token", token.data);
 
@@ -16,6 +16,7 @@ export const signUp = (user) => {
       })
       .catch((error) => {
         console.log(error.response);
+
         toast.error(error.response?.data, {
           position: toast.POSITION.BOTTOM_RIGHT,
         });
@@ -23,10 +24,10 @@ export const signUp = (user) => {
   };
 };
 
-export const signIn = (userData) => {
+export const signIn = (email, password) => {
   return (dispatch) => {
     axios
-      .post(`${url}/signin`, userData)
+      .post(`${url}/signIn`, { email, password })
       .then((token) => {
         localStorage.setItem("token", token.data);
 
@@ -37,6 +38,7 @@ export const signIn = (userData) => {
       })
       .catch((error) => {
         console.log(error.response);
+
         toast.error(error.response?.data, {
           position: toast.POSITION.BOTTOM_RIGHT,
         });
@@ -46,6 +48,10 @@ export const signIn = (userData) => {
 
 export const signOut = () => {
   return (dispatch) => {
+    dispatch({
+      type: "CLEAR_TODOS",
+    });
+
     dispatch({
       type: "SIGN_OUT",
     });

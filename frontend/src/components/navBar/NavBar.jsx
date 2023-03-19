@@ -47,12 +47,12 @@ const NavBar = () => {
             SignOut
           </Button>
           <Button color="inherit">
-            <Link className={classes.linkStyle} to="/signin">
+            <Link className={classes.linkStyle} to="/signIn">
               SignIn
             </Link>
           </Button>
           <Button color="inherit">
-            <Link className={classes.linkStyle} to="/signup">
+            <Link className={classes.linkStyle} to="/signUp">
               SignUp
             </Link>
           </Button>
