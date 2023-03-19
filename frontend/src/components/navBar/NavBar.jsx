@@ -22,13 +22,14 @@ const NavBar = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const state = useSelector((state) => state);
+  const auth = useSelector((state) => state.auth);
   console.log(state);
 
   const handleSignOut = () => {
     //signOut the user
     dispatch(signOut());
 
-    navigate("/signin");
+    navigate("/signIn");
   };
   return (
     <>
@@ -39,23 +40,30 @@ const NavBar = () => {
               Todo List App
             </Link>
           </Typography>
-          <Typography variant="subtitle2" className={classes.root}>
-            Logged in as Jobert
-          </Typography>
+          {auth._id ? (
+            <>
+              <Typography variant="subtitle2" className={classes.root}>
+                Logged in as {auth.name}
+              </Typography>
 
-          <Button color="inherit" onClick={() => handleSignOut()}>
-            SignOut
-          </Button>
-          <Button color="inherit">
-            <Link className={classes.linkStyle} to="/signIn">
-              SignIn
-            </Link>
-          </Button>
-          <Button color="inherit">
-            <Link className={classes.linkStyle} to="/signUp">
-              SignUp
-            </Link>
-          </Button>
+              <Button color="inherit" onClick={() => handleSignOut()}>
+                SignOut
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button color="inherit">
+                <Link className={classes.linkStyle} to="/signIn">
+                  SignIn
+                </Link>
+              </Button>
+              <Button color="inherit">
+                <Link className={classes.linkStyle} to="/signUp">
+                  SignUp
+                </Link>
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </>
