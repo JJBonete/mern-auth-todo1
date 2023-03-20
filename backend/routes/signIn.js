@@ -3,11 +3,10 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const express = require("express");
 const { User } = require("../models/user");
-const auth = require("../middleware/auth");
 
 const router = express.Router();
 
-router.post("/", auth, async (req, res) => {
+router.post("/", async (req, res) => {
   const schema = Joi.object({
     email: Joi.string().min(3).max(200).email().required(),
     password: Joi.string().min(6).max(200).required(),
@@ -22,21 +21,14 @@ router.post("/", auth, async (req, res) => {
     let user = await User.findOne({ email: req.body.email });
     console.log(user);
     if (!user) return res.status(400).send("Invalid email or password");
-    const validpassword = await bcrypt.compare(
-      req.body.password,
-      user.password
-    );
+    const validpassword = await bcrypt.compare(req.body.password, user.password);
 
-    if (!validpassword)
-      return res.status(400).send("Invalid email or password");
+    if (!validpassword) return res.status(400).send("Invalid email or password");
 
     const secretKey = process.env.SECRET_KEY;
-    const token = jwt.sign(
-      { _id: user._id, name: user.name, email: user.email },
-      secretKey
-    );
+    const token = jwt.sign({ _id: user._id, name: user.name, email: user.email }, secretKey);
 
-    res.json(token);
+    res.json({ token: token });
   } catch (error) {
     res.status(500).send(error.message);
     console.log(error.message);

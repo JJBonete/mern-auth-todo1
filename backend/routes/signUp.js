@@ -4,9 +4,8 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 const { User } = require("../models/user");
-const auth = require("../middleware/auth");
 
-router.post("/", auth, async (req, res) => {
+router.post("/", async (req, res) => {
   const schema = Joi.object({
     name: Joi.string().min(3).max(30).required(),
     email: Joi.string().min(3).max(200).email().required(),
@@ -19,8 +18,7 @@ router.post("/", auth, async (req, res) => {
 
   try {
     let user = await User.findOne({ email: req.body.email });
-    if (user)
-      return res.status(400).send("User with that email already exists...");
+    if (user) return res.status(400).send("User with that email already exists...");
 
     const { name, email, password } = req.body;
 
@@ -32,10 +30,7 @@ router.post("/", auth, async (req, res) => {
     await user.save();
 
     const secretKey = process.env.SECRET_KEY;
-    const token = jwt.sign(
-      { _id: user._id, name: user.name, email: user.email },
-      secretKey
-    );
+    const token = jwt.sign({ _id: user._id, name: user.name, email: user.email }, secretKey);
 
     res.json(token);
   } catch (error) {

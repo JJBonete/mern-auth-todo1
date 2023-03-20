@@ -24,10 +24,10 @@ export const signUp = (user) => {
   };
 };
 
-export const signIn = (email, password) => {
+export const signIn = (userData) => {
   return (dispatch) => {
     axios
-      .post(`${url}/signIn`, { email, password })
+      .post(`${url}/signIn`, userData)
       .then((token) => {
         localStorage.setItem("token", token.data);
 

@@ -19,21 +19,15 @@ const useStyles = makeStyles({
 });
 
 const SignIn = () => {
+  const initialValues = { email: "", password: "" };
   const classes = useStyles();
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-  const [userData, setuserData] = useState({
-    email: "",
-    password: "",
-  });
-
+  const [password, setPassword] = useState();
+  const [email, setEmail] = useState();
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(signIn(userData));
-    setuserData({
-      email: "",
-      password: "",
-    });
+    dispatch(signIn({ email, password }));
   };
 
   if (auth._id)
@@ -45,12 +39,7 @@ const SignIn = () => {
 
   return (
     <>
-      <form
-        noValidate
-        autoComplete="off"
-        className={classes.formStyle}
-        onSubmit={handleSubmit}
-      >
+      <form noValidate autoComplete="off" className={classes.formStyle} onSubmit={handleSubmit}>
         <Typography variant="h5">SignIn</Typography>
         <TextField
           className={classes.spacing}
@@ -58,10 +47,8 @@ const SignIn = () => {
           label="Enter Email"
           variant="outlined"
           fullWidth
-          value={userData.email}
-          onChange={(event) =>
-            setuserData({ ...userData, email: event.target.value })
-          }
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
         />
         <TextField
           className={classes.spacing}
@@ -70,18 +57,11 @@ const SignIn = () => {
           label="Enter Password"
           variant="outlined"
           fullWidth
-          value={userData.password}
-          onChange={(event) =>
-            setuserData({ ...userData, password: event.target.value })
-          }
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
         />
 
-        <Button
-          className={classes.spacing}
-          variant="contained"
-          color="primary"
-          type="submit"
-        >
+        <Button className={classes.spacing} variant="contained" color="primary" type="submit">
           SignIn
         </Button>
       </form>
